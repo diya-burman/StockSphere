@@ -13,20 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  Id    Int     @id
-  name  String?
-  email String  @unique
-}
-
 model Users {
-  UserId String @id
+  userId String @id
   name   String
   email  String
 }
 
 model Products {
-  productId     String      @id
+  productId     String     @id
   name          String
   price         Float
   rating        Float?
@@ -42,17 +36,17 @@ model Sales {
   quantity    Int
   unitPrice   Float
   totalAmount Float
-  product     Products @relation(fields: [productId], references: [productId])
+  product     Products @relation(fields: [productId], references: [productId], onDelete: Cascade)
 }
 
 model Purchases {
-  purchasesId String   @id
-  productId   String
-  timestamp   DateTime
-  quantity    Int
-  uniCost     Float
-  totalCost   Float
-  product     Products @relation(fields: [productId], references: [productId])
+  purchaseId String   @id
+  productId  String
+  timestamp  DateTime
+  quantity   Int
+  unitCost   Float
+  totalCost  Float
+  product    Products @relation(fields: [productId], references: [productId])
 }
 
 model Expenses {
@@ -84,10 +78,10 @@ model ExpenseSummary {
 }
 
 model ExpenseByCategory {
-  expenseByCategory String         @id
-  expenseSummaryId  String
-  category          String
-  amount            BigInt
-  date              DateTime
-  expenseSummary    ExpenseSummary @relation(fields: [expenseSummaryId], references: [expenseSummaryId])
+  expenseByCategoryId String         @id
+  expenseSummaryId    String
+  category            String
+  amount              BigInt
+  date                DateTime
+  expenseSummary      ExpenseSummary @relation(fields: [expenseSummaryId], references: [expenseSummaryId])
 }
