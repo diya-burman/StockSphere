@@ -3,6 +3,16 @@ import fs from "fs";
 import path from "path";
 const prisma = new PrismaClient();
 
+function customFileURLToPath(url: string) {
+  const isWindows = process.platform === 'win32';
+  let filePath = decodeURIComponent(url.replace('file:///', isWindows ? '' : '/'));
+
+  if (isWindows) {
+    filePath = filePath.replace(/\//g, '\\');
+  }
+  return filePath;
+}
+
 async function deleteAllData(orderedFileNames: string[]) {
   const modelNames = orderedFileNames.map((fileName) => {
     const modelName = path.basename(fileName, path.extname(fileName));
@@ -21,6 +31,9 @@ async function deleteAllData(orderedFileNames: string[]) {
     }
   }
 }
+
+const __filename = customFileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function main() {
   const dataDirectory = path.join(__dirname, "seedData");
