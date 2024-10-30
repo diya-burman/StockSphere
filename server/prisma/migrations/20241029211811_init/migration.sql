@@ -1,10 +1,10 @@
 -- CreateTable
-CREATE TABLE "User" (
-    "Id" INTEGER NOT NULL,
-    "name" TEXT,
+CREATE TABLE "Users" (
+    "userId" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
 
-    CONSTRAINT "User_pkey" PRIMARY KEY ("Id")
+    CONSTRAINT "Users_pkey" PRIMARY KEY ("userId")
 );
 
 -- CreateTable
@@ -32,14 +32,14 @@ CREATE TABLE "Sales" (
 
 -- CreateTable
 CREATE TABLE "Purchases" (
-    "purchasesId" TEXT NOT NULL,
+    "purchaseId" TEXT NOT NULL,
     "productId" TEXT NOT NULL,
     "timestamp" TIMESTAMP(3) NOT NULL,
     "quantity" INTEGER NOT NULL,
-    "uniCost" DOUBLE PRECISION NOT NULL,
+    "unitCost" DOUBLE PRECISION NOT NULL,
     "totalCost" DOUBLE PRECISION NOT NULL,
 
-    CONSTRAINT "Purchases_pkey" PRIMARY KEY ("purchasesId")
+    CONSTRAINT "Purchases_pkey" PRIMARY KEY ("purchaseId")
 );
 
 -- CreateTable
@@ -83,17 +83,14 @@ CREATE TABLE "ExpenseSummary" (
 
 -- CreateTable
 CREATE TABLE "ExpenseByCategory" (
-    "expenseByCategory" TEXT NOT NULL,
+    "expenseByCategoryId" TEXT NOT NULL,
     "expenseSummaryId" TEXT NOT NULL,
     "category" TEXT NOT NULL,
     "amount" BIGINT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "ExpenseByCategory_pkey" PRIMARY KEY ("expenseByCategory")
+    CONSTRAINT "ExpenseByCategory_pkey" PRIMARY KEY ("expenseByCategoryId")
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
 ALTER TABLE "Sales" ADD CONSTRAINT "Sales_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Products"("productId") ON DELETE RESTRICT ON UPDATE CASCADE;
